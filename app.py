@@ -104,5 +104,13 @@ def senddata():
     name = 'world' 
     return render_template('senddata.html', data=name)
 
+@app.route('/goout') 
+def myimage(): 
+    return render_template("myimage.html")
+
+@app.errorhandler(404) 
+def page_not_found(error): 
+    return "페이지가 없습니다. URL를 확인 하세요", 404
+
 if __name__ == '__main__': 
     app.run(debug=True)
