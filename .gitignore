@@ -4,6 +4,9 @@
 ### 가상 환경 ###
 env/
 
+### 게임 save.txt ###
+save.txt
+
 ### Code ###
 .vscode/*
 !.vscode/settings.json
