@@ -1,7 +1,8 @@
-from flask import Flask,request,render_template, redirect, url_for
+from flask import Flask,request,render_template, redirect, url_for,abort,session
 import game,json,dbdb
 
 app = Flask(__name__)
+app.secret_key = b'aaa!111/'
 
 @app.route('/')
 def index():
@@ -13,6 +14,8 @@ def hello():
 
 @app.route('/form') 
 def hellohtml(): 
+    if 'user' in session:
+        return render_template('test.html')
     return render_template("hello.html") 
 
 @app.route('/method', methods=['GET', 'POST']) 
@@ -40,6 +43,7 @@ def getinfo(): # 파일 입력
 @app.route('/login')
 def login():
     return render_template("login.html")
+    
 @app.route('/result',methods=['POST'])
 def result():
     id = 'abc'
@@ -47,10 +51,20 @@ def result():
     formid =request.form["fid"]
     formpw = request.form["fpw"] 
 
-    if(id == formid):
-        if(pw == formpw):
-            return "아이디와 비번이 맞습니다."
-    return "아이디와 비번이 맞지 않습니다."
+    if(id == formid and pw == formpw):
+        session['user'] = id
+        return '''
+            <script> alert("안녕하세요~ {}님");
+            location.href="/form"
+            </script>
+            '''.format(id)
+    else:
+        return "아이디와 비번이 맞지 않습니다."
+
+@app.route('/logout')
+def logout():
+    session.pop('user' ,None)
+    return redirect(url_for('form'))
 
 @app.route('/daum')
 def daum():
