@@ -6,7 +6,7 @@ app.secret_key = b'aaa!111/'
 
 @app.route('/')
 def index():
-    return '메인페이지'
+    return render_template("main.html")
 
 @app.route('/hello/')
 def hello():
@@ -46,38 +46,48 @@ def login():
     
 @app.route('/result',methods=['POST'])
 def result():
-    id = 'abc'
-    pw = '1234'
     formid =request.form["fid"]
     formpw = request.form["fpw"] 
 
-    if(id == formid and pw == formpw):
-        session['user'] = id
+    print(formid,type(formid))
+    print(formpw,type(formpw))
+
+    ret = dbdb.select_user(formid,formpw)
+    print(ret)
+    if ret != None:
+        session['user'] = ret[2]
         return '''
             <script> alert("안녕하세요~ {}님");
             location.href="/form"
             </script>
-            '''.format(id)
+            '''.format(ret[2])
     else:
         return "아이디와 비번이 맞지 않습니다."
+
+@app.route('/join',methods=['GET','POST'])
+def join():
+    if request.method == 'GET':
+        return render_template('join.html')
+    else :
+        id =request.form["fid"]
+        pw = request.form["fpw"] 
+        nm = request.form["fnm"] 
+
+        ret = dbdb.check_id(id)
+        if ret != None:
+            return '''
+                <script>alert('다른 아이디를 사용하세요');
+                location.href = '/join';
+                </script>
+                '''
+
+        dbdb.insert_user(id,pw,nm)
+        return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
     session.pop('user' ,None)
-    return redirect(url_for('form'))
-
-@app.route('/daum')
-def daum():
-    return redirect("https://www.daum.net/")
-@app.route('/naver')
-def naver():
-    return redirect("https://www.naver.com/")
-@app.route('/move/naver')
-def moveNaver():
-    return redirect(url_for('naver'))
-@app.route('/move/daum')
-def moveDaum():
-    return redirect(url_for('daum'))
+    return redirect(url_for('login'))
 
 @app.route('/hello/<name>')
 def hellovar(name):

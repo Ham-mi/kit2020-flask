@@ -1,0 +1,11 @@
+{% extends "layout.html" %} 
+{% block title %}메인 페이지{% endblock %} 
+{% block head %} 
+{{ super() }} 
+{% endblock %} 
+{% block content %}
+  <h3>Main Page</h3>
+  <p><a href={{ url_for('hello', name='탈주각') }}> 
+            <img src={{ url_for('static', filename='images/go.png') }}> 
+        </a></p>
+{% endblock %}

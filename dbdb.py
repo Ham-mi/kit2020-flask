@@ -22,12 +22,24 @@ def create_table():
     finally: 
         db.close()
 
+def insert_user(id, pw,name): 
+    try: 
+        db = dbcon() 
+        c = db.cursor() 
+        setdata = (id,pw, name) 
+        c.execute("INSERT INTO users VALUES (?, ?,?)", setdata) 
+        db.commit() 
+    except Exception as e: 
+        print('db error:', e) 
+    finally: 
+        db.close()
+
 def insert_data(num, name): 
     try: 
         db = dbcon() 
         c = db.cursor() 
         setdata = (num, name) 
-        c.execute("INSERT INTO student VALUES (?, ?)", setdata) 
+        c.execute("INSERT INTO student VALUES (?,?)", setdata) 
         db.commit() 
     except Exception as e: 
         print('db error:', e) 
@@ -47,8 +59,36 @@ def select_all():
         db.close() 
     return ret
 
-def select_num(num): 
+def select_user(id,pw): 
+    ret = list() 
+    try: 
+        db = dbcon() 
+        c = db.cursor() 
+        setdata = (id,pw) 
+        c.execute('SELECT * FROM users WHERE id = ? and pw = ?', setdata) 
+        ret = c.fetchone() 
+    except Exception as e: 
+        print('db error:', e) 
+    finally: 
+        db.close() 
+    return ret
+
+def check_id(id): 
     ret = () 
+    try: 
+        db = dbcon() 
+        c = db.cursor() 
+        setdata = (id,) 
+        c.execute('SELECT * FROM users WHERE id = ?', setdata) 
+        ret = c.fetchone() 
+    except Exception as e: 
+        print('db error:', e) 
+    finally: 
+        db.close() 
+    return ret
+
+def select_num(num): 
+    ret = list() 
     try: 
         db = dbcon() 
         c = db.cursor() 
@@ -63,6 +103,8 @@ def select_num(num):
 
 #create_table()
 #insert_data('20201236','디비')
+#insert_user('abd','1234','에비시')
 #ret = select_all()
 #ret = select_num('20201236')
-#print(ret)
+ret = select_user('abc','1234')
+print(ret)

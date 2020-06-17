@@ -1,10 +1,12 @@
-<!DOCTYPE html> 
-<html> 
-    <body> 
-        <h2>Stage 2</h2> 
+{% extends "layout.html" %} 
+{% block title %}메인 페이지{% endblock %} 
+{% block head %} 
+{{ super() }} 
+{% endblock %} 
+{% block content %}
+<h2>Stage 2</h2> 
         {% for i in items %} 
             {{ loop.index }}. 
             {{ i }}<br> 
-        {% endfor %} 
-    </body> 
-</html>
+        {% endfor %}
+{% endblock %}

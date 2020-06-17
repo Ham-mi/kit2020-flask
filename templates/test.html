@@ -1,6 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <h2>로그인 후 화면</h2>
-    </body>
-</html>
+{% extends "layout.html" %} 
+{% block title %}메인 페이지{% endblock %} 
+{% block head %} 
+{{ super() }} 
+{% endblock %} 
+{% block content %}
+<h2>로그인 후 화면</h2>
+{% endblock %}

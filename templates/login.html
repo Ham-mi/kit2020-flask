@@ -1,13 +1,15 @@
-<!DOCTYPE html> 
-<html> 
-    <body> 
-        <h2>KIT 웹앱 프로그래밍</h2> 
-        <form action="/result" method="POST"> 
-            <label for="formid">ID:</label><br> 
-            <input type="text" id="formid" name="fid"><br> 
-            <label for="formpw">PW:</label><br> 
-            <input type="text" id="formpw" name="fpw"><br><br> 
-            <input type="submit" value="확인"> 
-        </form> 
-    </body> 
-    </html>
+{% extends "layout.html" %} 
+{% block title %}메인 페이지{% endblock %} 
+{% block head %} 
+{{ super() }} 
+{% endblock %} 
+{% block content %}
+<h2>KIT 웹앱 프로그래밍</h2> 
+<form action="/result" method="POST"> 
+    <label for="formid">ID:</label><br> 
+    <input type="text" id="formid" name="fid"><br> 
+    <label for="formpw">PW:</label><br> 
+    <input type="text" id="formpw" name="fpw"><br><br> 
+    <input type="submit" value="확인"> 
+</form> 
+{% endblock %}
