@@ -106,5 +106,5 @@ def select_num(num):
 #insert_user('abd','1234','에비시')
 #ret = select_all()
 #ret = select_num('20201236')
-ret = select_user('abc','1234')
-print(ret)
+#ret = select_user('abc','1234')
+#print(ret)
