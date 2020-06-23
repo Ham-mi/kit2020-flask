@@ -35,10 +35,12 @@ def method():
 
 @app.route('/getinfo') 
 def getinfo(): # 파일 입력 
-    ret = dbdb.select_all()
-    print(ret[3])
-    return render_template('getinfo.html',data=ret)
+    if 'user' in session:
+        ret = dbdb.select_all()
+        print(ret[3])
+        return render_template('getinfo.html',data=ret)
     #return '번호 : {}, 이름 : {}'.format(ret[0], ret[1])
+    return redirect(url_for('login'))
 
 @app.route('/login')
 def login():
@@ -56,13 +58,9 @@ def result():
     print(ret)
     if ret != None:
         session['user'] = ret[2]
-        return '''
-            <script> alert("안녕하세요~ {}님");
-            location.href="/form"
-            </script>
-            '''.format(ret[2])
+        return redirect(url_for('index'))
     else:
-        return "아이디와 비번이 맞지 않습니다."
+        return redirect(url_for('login'))
 
 @app.route('/join',methods=['GET','POST'])
 def join():
